@@ -1,0 +1,4 @@
+https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
+https://github.com/rutgerkok/BlockLocker/releases/download/v1.12.1/blocklocker-1.12.1.jar
+https://github.com/ArcanePlugins/LevelledMobs/releases/download/3.10.3/LevelledMobs-3.10.3.b763.jar

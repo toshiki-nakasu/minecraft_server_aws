@@ -1,0 +1,58 @@
+{
+    // # devcontainer.json sample
+    // recommend: Do not sort json
+    // ## To create image
+    "name": "minecraft_server_aws",
+    "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+
+    // ## From base image
+    "dockerComposeFile": ["./compose.yaml"],
+    "service": "ubuntu",
+    "runServices": [],
+
+    // ## Resources
+    // warning: Can not use Env
+    "mounts": [
+        {
+            "type": "bind",
+            "source": "${localWorkspaceFolder}",
+            "target": "${containerWorkspaceFolder}",
+            "consistency": "delegated"
+        },
+        {
+            "type": "bind",
+            "source": "${localEnv:HOME}/.aws",
+            "target": "/home/developer/.aws",
+            "consistency": "cached"
+        }
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "username": "developer"
+        },
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/aws-cli:1": {
+            "version": "latest"
+        }
+    },
+
+    // ## Environment
+    "remoteUser": "developer",
+    "containerEnv": {},
+    "remoteEnv": {},
+    "portsAttributes": {},
+
+    // ## Container command
+    // warning: To use .sh you need mount
+    // info: key is output stage
+    "overrideCommand": true,
+
+    // IDE
+    "customizations": {
+        "vscode": {
+            "extensions": [],
+            "settings": {}
+        }
+    }
+}

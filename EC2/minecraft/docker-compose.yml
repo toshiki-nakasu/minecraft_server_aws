@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+    mc_server:
+        container_name: '${SERVER_CONTAINER_NAME}'
+        image: 'itzg/minecraft-server:${JAVA_VERSION}'
+        tty: true
+        stdin_open: true
+        ports:
+            - '19132:19132/udp'
+            - '19133:19133/udp'
+            - '25565:25565/tcp'
+            - '25575:25575/udp'
+        environment:
+            ANNOUNCE_PLAYER_ACHIEVEMENTS: 'true'
+            BROADCAST_CONSOLE_TO_OPS: 'true'
+            ENABLE_COMMAND_BLOCK: 'true'
+            DIFFICULTY: 'normal'
+            FORCE_GAMEMODE: 'true'
+            FUNCTION_PERMISSION_LEVEL: 2
+            LEVEL: '${AUTHOR}_${SERVER_NAME}_server'
+            MAX_PLAYERS: 30
+            MEMORY: '${MEMORY_SIZE}'
+            MODE: 'survival'
+            ONLINE_MODE: 'false'
+            OP_PERMISSION_LEVEL: 4
+            PLAYER_IDLE_TIMEOUT: 300
+            PREVIEWS_CHAT: 'true'
+            SEED: '${WORLD_SEED}'
+            SERVER_NAME: '${AUTHOR}_${SERVER_NAME}_server'
+            SERVER_PORT: 25565
+            SPAWN_PROTECTION: 0
+            EULA: 'TRUE'
+            MODS_FILE: '/extras/mods.txt'
+            OPS_FILE: '/extras/ops.json'
+            OVERRIDE_SERVER_PROPERTIES: 'true'
+            REMOVE_OLD_MODS: 'true'
+            REMOVE_OLD_MODS_DEPTH: 1
+            REMOVE_OLD_MODS_INCLUDE: '*.jar'
+            TYPE: 'SPIGOT'
+            TZ: '${TIME_ZONE}'
+            VERSION: '${MINECRAFT_VERSION}'
+        volumes:
+            - ./data:/data
+            - ./mods.txt:/extras/mods.txt:ro
+            - ./ops.json:/extras/ops.json:ro
+        restart: unless-stopped
+
+    mc_backupper:
+        container_name: mc_backupper
+        image: itzg/mc-backup
+        depends_on:
+            - ${SERVER_CONTAINER_NAME}
+        environment:
+            BACKUP_INTERVAL: '1h'
+            PRUNE_BACKUPS_DAYS: '7'
+            TZ: '${TIME_ZONE}'
+        volumes:
+            - ./data:/data:ro
+            - ./backups:/backups
+        network_mode: 'service:${SERVER_CONTAINER_NAME}'
+        restart: unless-stopped
