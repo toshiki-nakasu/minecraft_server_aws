@@ -15,7 +15,7 @@ variable "EC2_VOLUME_IMAGE" {
 }
 
 variable "INSTANCE_TYPE" {
-  default = "t3.large"
+  default = "m6a.large"
 }
 
 variable "JAVA_VERSION" {
@@ -27,7 +27,7 @@ variable "MEMORY_SIZE" {
 }
 
 variable "MINECRAFT_VERSION" {
-  default = "1.19.4"
+  default = "1.20.1"
 }
 
 variable "REGION" {
@@ -38,8 +38,12 @@ variable "SERVER_CONTAINER_NAME" {
   default = "mc_server"
 }
 
+variable "BACKUP_CONTAINER_NAME" {
+  default = "mc_backupper"
+}
+
 variable "SERVER_NAME" {
-  default = "minecraft_server"
+  default = "minecraft"
 }
 
 variable "TIME_ZONE" {
